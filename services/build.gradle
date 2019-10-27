@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'war'
+    id "io.freefair.lombok" version "4.1.3"
+}
+
+group 'prv.saevel'
+
+version '1.0'
+
+sourceCompatibility = project.ext.java.version
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    providedCompile group: 'org.projectlombok', name: 'lombok', version: project.ext.lombok.version
+
+    compile project(':persistence')
+
+    testCompile group: 'junit', name: 'junit', version: project.ext.junit.version
+}

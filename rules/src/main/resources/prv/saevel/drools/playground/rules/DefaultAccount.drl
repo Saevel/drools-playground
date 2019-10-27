@@ -1,0 +1,11 @@
+package prv.saevel.drools.playground.rules
+
+import prv.saevel.drools.playground.persistence.model.User;
+import prv.saevel.drools.playground.persistence.model.Account;
+
+rule "DefaultAccount"
+    when
+        user : User
+    then
+        System.out.println("User detected");
+    end
