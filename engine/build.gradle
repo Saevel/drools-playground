@@ -23,6 +23,8 @@ dependencies {
 
     compile project(":rules")
 
+    runtime project(":rules")
+
     testCompile group: 'junit', name: 'junit', version: project.ext.junit.version
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: project.ext.spring.version
 }

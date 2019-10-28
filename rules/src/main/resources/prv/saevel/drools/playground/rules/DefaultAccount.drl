@@ -1,11 +1,15 @@
 package prv.saevel.drools.playground.rules
 
-import prv.saevel.drools.playground.persistence.model.User;
-import prv.saevel.drools.playground.persistence.model.Account;
+import prv.saevel.drools.playground.persistence.model.UserModel;
+import prv.saevel.drools.playground.persistence.model.AccountModel;
+import prv.saevel.drools.playground.persistence.model.Currency;
+
+global prv.saevel.drools.playground.services.AccountService accountService;
 
 rule "DefaultAccount"
     when
-        user : User
+        user : User(anyUsername : username, anyPassword : password)
     then
-        System.out.println("User detected");
+        Account defaultAccount = accountService.createDefaultAccount(user);
+        insert(defaultAccount);
     end

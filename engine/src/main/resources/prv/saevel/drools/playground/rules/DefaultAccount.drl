@@ -1,7 +1,7 @@
 package prv.saevel.drools.playground.rules
 
-import prv.saevel.drools.playground.persistence.model.User;
-import prv.saevel.drools.playground.persistence.model.Account;
+import prv.saevel.drools.playground.services.model.User;
+import prv.saevel.drools.playground.services.model.Account;
 import prv.saevel.drools.playground.persistence.model.Currency;
 
 global prv.saevel.drools.playground.services.AccountService accountService;

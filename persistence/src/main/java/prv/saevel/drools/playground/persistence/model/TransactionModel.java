@@ -1,15 +1,19 @@
 package prv.saevel.drools.playground.persistence.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Optional;
 
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class TransactionModel {
     @Id
     @GeneratedValue
     private long id;
@@ -23,13 +27,13 @@ public class Transaction {
     @Enumerated
     private TransactionType type;
 
-    @ManyToOne(targetEntity = Account.class)
+    @ManyToOne(targetEntity = AccountModel.class)
     @JoinColumn(name = "source_account_id")
     @NonNull
-    private Optional<Account> sourceAccount;
+    private Optional<AccountModel> sourceAccount;
 
-    @ManyToOne(targetEntity = Account.class)
+    @ManyToOne(targetEntity = AccountModel.class)
     @JoinColumn(name = "target_account_id")
     @NonNull
-    private Optional<Account> targetAccount;
+    private Optional<AccountModel> targetAccount;
 }

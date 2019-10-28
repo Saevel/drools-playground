@@ -1,20 +1,18 @@
-package prv.saevel.drools.playground.persistence.model;
+package prv.saevel.drools.playground.services.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
 
 @Data
-@Entity
-@Table(name = "users")
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue
+
     private long id;
 
     @NonNull
@@ -25,6 +23,5 @@ public class User {
 
     private int age;
 
-    @OneToMany
     private List<Account> accounts = new LinkedList<>();
 }

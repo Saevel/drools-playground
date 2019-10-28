@@ -1,15 +1,15 @@
 package prv.saevel.drools.playground.persistence.model;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "accounts")
-public class Account {
+public class AccountModel {
     @Id
     @GeneratedValue
     private long id;
@@ -20,8 +20,8 @@ public class Account {
 
     private double value;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = UserModel.class)
     @JoinColumn(name = "owner_id", referencedColumnName = "id", unique = true, nullable = false)
     @NonNull
-    private User owner;
+    private UserModel owner;
 }
