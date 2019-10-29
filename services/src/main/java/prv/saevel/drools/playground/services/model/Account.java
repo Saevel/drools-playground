@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import prv.saevel.drools.playground.persistence.model.AccountType;
 import prv.saevel.drools.playground.persistence.model.Currency;
 
 @Data
@@ -15,6 +16,9 @@ public class Account {
 
     @NonNull
     private Currency currency;
+
+    @NonNull
+    private AccountType accountType;
 
     private double value;
 }
