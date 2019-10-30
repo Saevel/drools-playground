@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import prv.saevel.drools.playground.drools.KieSessionFactory;
+import prv.saevel.drools.playground.services.CountryService;
 import prv.saevel.drools.playground.services.UserService;
 import prv.saevel.drools.playground.services.model.User;
 import reactor.core.publisher.Mono;
@@ -24,16 +25,22 @@ public class UserController {
 
     private final KieSessionFactory kieSessionFactory;
     private final UserService userService;
+    private final CountryService countryService;
 
     @PostMapping
     public Mono<User> createUser(@RequestBody User user) {
+        // TODO handle validation by @Valid
+        if (!countryService.isValidCountry(user.getCountry())) {
+            throw new IllegalArgumentException("Not valid country. See valid countries at: GET /countries");
+        }
+
         final KieSession kieSession = kieSessionFactory.createKieSession();
         User savedUser = userService.saveUser(user);
         kieSession.insert(savedUser);
         final int firedRules = kieSession.fireAllRules();
-        log.info("Fired {} rules for: {}", firedRules, user);
-
         userService.saveUser(savedUser);
+        log.info("Fired {} rules for: {}", firedRules, savedUser);
+
         Optional<User> retrievedUser = userService.findById(savedUser.getId());
         kieSession.dispose();
 

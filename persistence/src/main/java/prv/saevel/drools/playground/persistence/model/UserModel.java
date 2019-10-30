@@ -32,6 +32,9 @@ public class UserModel {
     @NonNull
     private int age;
 
+    @NonNull
+    private String country;
+
     @OneToMany
     private List<AccountModel> accounts = new LinkedList<>();
 }

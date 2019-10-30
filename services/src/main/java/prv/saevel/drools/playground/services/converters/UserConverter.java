@@ -11,7 +11,7 @@ public class UserConverter implements Converter<UserModel, User> {
 
     @Override
     public User convert(UserModel userModel) {
-        User user = new User(userModel.getUsername(), userModel.getPassword(), userModel.getAge());
+        User user = new User(userModel.getUsername(), userModel.getPassword(), userModel.getAge(), userModel.getCountry());
         user.setId(userModel.getId());
         user.setAccounts(userModel.getAccounts().stream().map(accountModel -> new AccountConverter(userModel).convert(accountModel)).collect(Collectors.toList()));
         return user;
@@ -19,7 +19,7 @@ public class UserConverter implements Converter<UserModel, User> {
 
     @Override
     public UserModel reverseConvert(User user) {
-        UserModel userModel = new UserModel(user.getUsername(), user.getPassword(), user.getAge());
+        UserModel userModel = new UserModel(user.getUsername(), user.getPassword(), user.getAge(), user.getCountry());
         userModel.setId(user.getId());
         userModel.setAccounts(user.getAccounts().stream().map(account -> new AccountConverter(userModel).reverseConvert(account)).collect(Collectors.toList()));
         return userModel;

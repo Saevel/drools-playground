@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Component;
-import prv.saevel.drools.playground.persistence.model.AccountType;
 import prv.saevel.drools.playground.services.AccountService;
+import prv.saevel.drools.playground.services.CountryService;
 
 @Component
 @RequiredArgsConstructor
@@ -13,11 +13,12 @@ public class KieSessionFactory {
 
     private final KieContainer kieContainer;
     private final AccountService accountService;
+    private final CountryService countryService;
 
     public KieSession createKieSession() {
         KieSession kieSession = kieContainer.newKieSession("rulesSession");
         kieSession.setGlobal("accountService", accountService);
-        kieSession.setGlobal("defaultAccountType", AccountType.BASIC);
+        kieSession.setGlobal("countryService", countryService);
         return kieSession;
     }
 }
