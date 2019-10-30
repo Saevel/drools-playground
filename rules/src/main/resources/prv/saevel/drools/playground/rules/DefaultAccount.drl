@@ -1,8 +1,9 @@
 package prv.saevel.drools.playground.rules
 
-import prv.saevel.drools.playground.persistence.model.UserModel;
-import prv.saevel.drools.playground.persistence.model.AccountModel;
-import prv.saevel.drools.playground.persistence.model.Currency;
+import prv.saevel.drools.playground.services.model.User;
+import prv.saevel.drools.playground.services.model.Account;
+import prv.saevel.drools.playground.services.model.Account
+import prv.saevel.drools.playground.persistence.model.AccountType;
 
 global prv.saevel.drools.playground.services.AccountService accountService;
 
@@ -10,6 +11,6 @@ rule "DefaultAccount"
     when
         user : User(anyUsername : username, anyPassword : password)
     then
-        Account defaultAccount = accountService.createDefaultAccount(user);
+        Account defaultAccount = accountService.createDefaultAccount(user, AccountType.BASIC);
         insert(defaultAccount);
     end

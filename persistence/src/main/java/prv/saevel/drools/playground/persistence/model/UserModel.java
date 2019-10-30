@@ -5,7 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,7 +29,11 @@ public class UserModel {
     @NonNull
     private String password;
 
+    @NonNull
     private int age;
+
+    @NonNull
+    private String country;
 
     @OneToMany
     private List<AccountModel> accounts = new LinkedList<>();

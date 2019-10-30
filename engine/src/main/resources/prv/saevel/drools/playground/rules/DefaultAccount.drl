@@ -1,15 +1,74 @@
 package prv.saevel.drools.playground.rules
 
-import prv.saevel.drools.playground.services.model.User;
-import prv.saevel.drools.playground.services.model.Account;
+import prv.saevel.drools.playground.persistence.model.AccountType;
 import prv.saevel.drools.playground.persistence.model.Currency;
+import prv.saevel.drools.playground.services.model.Account;
+import prv.saevel.drools.playground.services.model.User;
+import java.util.Collections
+import java.util.Optional
+import java.util.stream.Collectors;
+
 
 global prv.saevel.drools.playground.services.AccountService accountService;
+global prv.saevel.drools.playground.services.CountryService countryService;
+
+rule "YouthAccountType"
+    when
+        user : User(age <= 26)
+    then
+        insert(AccountType.YOUTH);
+    end
+
+rule "DefaultAccountType"
+    when
+        not AccountType()
+    then
+        insert(AccountType.BASIC);
+    end
+
+rule "DefaultCurrencyPoland"
+    when
+        user : User(country == "Poland")
+    then
+        insert(Currency.PLN);
+    end
+
+rule "DefaultCurrencyEU"
+    when
+        user : User(countryService.isEUCountry(country) && country != "Poland")
+    then
+        insert(Currency.EUR);
+    end
+
+rule "DefaultCurrencySingapore"
+    when
+        user : User(country == "Singapore")
+    then
+        insert(Currency.SGD);
+    end
+
+rule "MultiAccountsForPolishCustomersWithAgeGreaterThan26"
+    when
+        user : User(country == "Poland", age > 26)
+    then
+        insert(Currency.EUR);
+        insert(Currency.USD);
+        insert(Currency.SGD);
+    end
+
+rule "DefaultCurrency"
+    when
+        not Currency()
+    then
+        insert(Currency.USD);
+    end
 
 rule "DefaultAccount"
     when
-        user : User(anyUsername : username, anyPassword : password)
+        user : User()
+        accountType : AccountType()
+        currency : Currency()
     then
-        Account defaultAccount = accountService.createDefaultAccount(user);
-        insert(defaultAccount);
+        Account defaultAccount = accountService.createAccount(user, accountType, currency);
+        Optional.ofNullable(defaultAccount).ifPresent(account -> user.addAccount(account));
     end

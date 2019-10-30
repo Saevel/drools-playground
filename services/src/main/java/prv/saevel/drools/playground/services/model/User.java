@@ -21,7 +21,15 @@ public class User {
     @NonNull
     private String password;
 
-    private int age;
+    @NonNull
+    private Integer age;
+
+    @NonNull
+    private String country;
 
     private List<Account> accounts = new LinkedList<>();
+
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
 }
